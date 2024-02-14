@@ -25,7 +25,7 @@ services:
       - 8081:8080
       - 8788:8787
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/battleship-computer-service/api/engineering/ping"]
+      test: ["CMD", "curl", "-f", "http://localhost:8081/battleship-computer-service/api/engineering/ping"]
       interval: 5s
       timeout: 2s
       retries: 200

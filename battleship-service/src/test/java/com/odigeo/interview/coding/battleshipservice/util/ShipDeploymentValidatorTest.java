@@ -55,4 +55,10 @@ public class ShipDeploymentValidatorTest {
         shipDeploymentValidator.validate(shipsDeployment);
     }
 
+    @Test(expectedExceptions = ShipDeploymentException.class)
+    public void testValidateWithWrongShipNotContiguous() {
+        List<Ship> shipsDeployment = ShipDeploymentBuilder.buildShipNotContiguousDeployment();
+        shipDeploymentValidator.validate(shipsDeployment);
+    }
+
 }

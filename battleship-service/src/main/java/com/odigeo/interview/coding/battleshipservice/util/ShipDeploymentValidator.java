@@ -76,16 +76,41 @@ public class ShipDeploymentValidator {
         }
     }
 
+    private boolean hasError(List<Coordinate> coordinates, boolean isHorizontal) {
+        boolean error = false;
+        int first, second;
+        for (int i=0; i<coordinates.size()-1; i++) {
+            if (isHorizontal) {
+                first = coordinates.get(i).getColumn();
+                second = coordinates.get(i + 1).getColumn();
+            } else {
+                first = coordinates.get(i).getRow();
+                second = coordinates.get(i + 1).getRow();
+            }
+            if((second-first) > 1) {
+                error = true;
+                break;
+            }
+        }
+        return error;
+    }
+
+    private boolean compare(int first, int second) {
+        return (second-first) > 1;
+    }
+
     private boolean isHorizontal(Ship ship) {
         List<Coordinate> coordinates = ship.getCoordinates();
+        boolean error = hasError(coordinates, true);
         int firstRow = coordinates.get(0).getRow();
-        return coordinates.stream().allMatch(c -> c.getRow() == firstRow);
+        return !error && coordinates.stream().allMatch(c -> c.getRow() == firstRow);
     }
 
     private boolean isVertical(Ship ship) {
         List<Coordinate> coordinates = ship.getCoordinates();
+        boolean error = hasError(coordinates, false);
         int firstColumn = coordinates.get(0).getColumn();
-        return coordinates.stream().allMatch(c -> c.getColumn() == firstColumn);
+        return !error && coordinates.stream().allMatch(c -> c.getColumn() == firstColumn);
     }
 
     private void shipsOverlap(Collection<Ship> deployedShips) {

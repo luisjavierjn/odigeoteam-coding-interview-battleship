@@ -20,11 +20,11 @@ public class BattleshipClient {
 
     private static final Logger logger = LoggerFactory.getLogger(BattleshipClient.class);
 
-    private static final String BASE_URL = "http://battleship_service:8080/battleship-service/api";
+    private static final String BASE_URL = "http://localhost:8080/battleship-service/api";
     private final WebTarget target;
 
     public BattleshipClient() {
-        this.target = ClientBuilder.newClient().target(BASE_URL);
+        this.target = ClientBuilder.newClient().target("http://battleship_service:8080/battleship-service/api");
     }
 
     public BattleshipClient(WebTarget target) {
